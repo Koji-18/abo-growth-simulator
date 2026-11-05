@@ -96,6 +96,7 @@ main{margin:0 auto}
  .modelTabs{max-width:none}
  .modelTabs button{font-size:clamp(11px,3.1vw,14px)}
 }
+.treeTest{max-width:1128px;margin:8px auto 28px;border:1px dashed #8caed1;background:#fbfdff}.treeBadge{display:inline-block;border-radius:6px;padding:2px 8px;margin-bottom:8px;color:#43688c;background:#e9f1fa;font-size:11px;font-weight:700}.treeSummary{font-size:13px;font-weight:700;color:#285c90}.treeCanvas{overflow-x:auto;max-width:100%;border:1px solid #e1e8f0;border-radius:12px;background:linear-gradient(#f4f8fd,#fff);padding:12px 0}.treeCanvas svg{display:block;margin:auto;max-width:none}.treeCanvas:focus-visible{outline:2px solid #1774dd}@media(max-width:1160px){.treeTest{margin-left:10px;margin-right:10px}}
 </style>
 </head>
 <body>
@@ -126,6 +127,7 @@ main{margin:0 auto}
 <section class="card" aria-label="月ごとの推移"><div class="headrow"><div><h2>月ごとの推移</h2></div><button class="action" id="csv" type="button">CSV保存</button></div><div class="scroll timelineScroll" style="margin-top:12px"><table class="timelineTable" aria-label="月ごとの推移"><colgroup><col class="tMonth"><col class="tPeople"><col class="tPv"><col class="tRate"><col class="tBonus"></colgroup><thead><tr><th scope="col">月</th><th scope="col">人数</th><th scope="col">PV</th><th scope="col">率</th><th scope="col">ボーナス</th></tr></thead><tbody id="timelineBody"></tbody></table></div></section>
 <section class="card"><h2>この計算で想定していること</h2><p id="modelAssumption" class="small" style="margin-bottom:7px">新しい段は設定した間隔ごとに一斉に増えます。全員が同じ平均PVを毎月継続し、購入停止・返品・継続率低下・新規登録月のずれは考慮しません。</p><p class="small" style="margin:0 0 7px">追加ボーナスは実績を仮定して試算しますが、過去の実績・正式認定・受給可能期間・個別の登録履歴は検証できません。チェック時の金額は<strong>条件を満たすと仮定した場合</strong>のみの参考値です。</p><p class="small" style="margin:0">リーダーシップ・ボーナスはチェック時のみ、月間PVと系列数から有資格SPを仮定して6％と最低保証調整を概算します（正式資格・会社審査や上位系列への特殊なパスアップなどは未確認）。BSI内のリピートは本人が今月新規登録し初月から1万PVを継続した仮定で、3/6/9/12月目に千/2千/3千/6千円。紹介者分を本人へ加算しません。初達成は登録・切替月を含む3月以内、1組1回のみ。初月達成・翌月未達・翌々月再達成は翌々月を起点とする例外があります。その他の追加報酬、小売利益、経費、税金は含みません。成績別ボーナスの換算比率の初期値は1:1.446（税抜BVの平均値）です。商品別の税率は再現しません。日本アムウェイの公式ツールではありません。</p></section>
 </div></div></main><footer>ver1.0.0 ｜ 根拠：日本アムウェイ「ビジネスサポート2027」冊子10〜21頁。既存の成績別計算は概要書面2026年9月版に基づく。2026年11月時点の資料に基づく非公式の教育用試算です。一般公開・勧誘用途では会社の販売促進物等の規定、収入表示ルールを事前にご確認ください。</footer>
+<section class="treeTest card" aria-labelledby="treeTitle"><div class="headrow"><div><span class="treeBadge">テスト表示</span><h2 id="treeTitle">グループが広がる様子</h2></div></div><p class="small">あなたから枝分かれするスポンサリング関係を図で表示します。下のバーは図だけを動かします。</p><div class="rangebar"><label for="treeMonth"><span>図で見る月</span><span id="treeMonthLabel"></span></label><input id="treeMonth" type="range" min="0" max="12" step="1" value="0"></div><p id="treeSummary" class="treeSummary"></p><p class="small">図が横に広がるときは、左右にスクロールできます。</p><div id="treeCanvas" class="treeCanvas" tabindex="0" role="region" aria-label="グループ図・横スクロール可能"></div><p id="treeNote" class="small"></p></section>
 <script src="incentives.js"></script>
 <script>
 (()=>{'use strict';
@@ -297,7 +299,40 @@ function renderTable(){
     renderResults();
   }));
 }
-function renderResults(){const s=settings(),r=rows[selectedMonth];$('monthLabel').textContent=selectedMonth===0?'現在（0か月目）':`${selectedMonth}か月後`;$('sliderGuide').style.display=selectedMonth===0?'flex':'none';$('ratePill').textContent=r.invalid?'計算上限':`成績別 ${Math.round(r.rate*100)}%`;$('ratePill').className=`pill ${!r.invalid&&r.rate===.21?'success':''}`;$('growthPill').textContent=CONTINUOUS?'各人が毎月追加':`${s.interval}か月ごとに次の段`;const summary=(id,v)=>$(id).textContent=v;if(r.invalid){['count','groupPv','baseBonus','totalBonus'].forEach(id=>summary(id,'—'));summary('depth',`${r.depth}段目 / 計算上限`);$('excess').style.display='block';$('excess').textContent='理想化した累乗モデルの人数が100万人を超えたため、その月以降の金額を表示していません。';}else{summary('count',`${fmt(r.total)} 人`);summary('groupPv',`${fmt(r.groupPv)} PV`);summary('baseBonus',yen(r.base));summary('totalBonus',yen(r.totalBonus));summary('depth',CONTINUOUS?`直下フロント ${r.frontPv.length}人`:`${r.depth}段目まで形成`);$('excess').style.display='none';}const reached=rows.find(x=>x.month<=s.duration&&!x.invalid&&x.rate>=.21);$('milestone').textContent=reached?`21％到達の目安：${reached.month}か月後（150万PV以上）`:'予測期間内に21％未達';$('growthChart').innerHTML=svgLine(rows.filter(x=>x.month<=s.duration).map(x=>x.invalid?NaN:x.total),'#1774dd','人数');renderTiles(s,r);renderBreakdown(s,r);renderBonusQuick(s,r);renderFrontStats(s,r);document.querySelectorAll('#timelineBody tr').forEach(tr=>tr.classList.toggle('active',Number(tr.dataset.month)===selectedMonth));}
+// Isolated visual preview: no changes to the bonus or growth calculations.
+function renderGroupTree(s,month){
+ const host=$('treeCanvas'), n=s.fronts.length, depth=CONTINUOUS?month:Math.floor(month/s.interval);
+ $('treeMonthLabel').textContent=month+'か月後';
+ const result=calculate(month,s);
+ $('treeSummary').textContent=(CONTINUOUS?'毎月スポンサリング':'N人スポンサリング')+' · '+n+'人ずつ · '+(result.invalid?'グループ全体は計算上限100万人超': 'グループ全体 '+fmt(result.total)+'人');
+ let leaves=0,maxLevel=0,omitted=false;const nodes=[],edges=[];
+ function build(born,level,parent){
+  const count=CONTINUOUS?(month-born)*n:(level<depth?n:0);
+  const node={born,level,count,x:0};nodes.push(node);maxLevel=Math.max(maxLevel,level);
+  if(parent)edges.push([parent,node]);
+  if(level<3&&count>0){const children=[];for(let i=0;i<Math.min(3,count);i++)children.push(build(CONTINUOUS?born+1+Math.floor(i/n):(level+1)*s.interval,level+1,node));node.x=(children[0].x+children[children.length-1].x)/2;}
+  else node.x=leaves++;
+  node.hidden=level===3?count:Math.max(0,count-3);if(node.hidden)omitted=true;
+  return node;
+ }
+ build(0,0,null);
+ const width=Math.max(340,leaves*104),height=(maxLevel+1)*112+42;
+ const x=node=>leaves===1?width/2:52+node.x*(width-104)/(leaves-1), y=node=>42+node.level*112;
+ const colors=['#174b82','#247fbd','#289d93','#6b8cb4'];
+ let svg='<svg xmlns="http://www.w3.org/2000/svg" width="'+width+'" height="'+height+'" viewBox="0 0 '+width+' '+height+'" role="img" aria-label="自分を頂点に下へ広がるスポンサリング関係。表示は最大3段、各人の最初の3人まで。">';
+ svg+='<title>'+month+'か月後のグループ構造（抜粋）</title>';
+ for(const [a,b] of edges)svg+='<path d="M'+x(a)+','+(y(a)+20)+' C'+x(a)+','+(y(a)+62)+' '+x(b)+','+(y(b)-62)+' '+x(b)+','+(y(b)-20)+'" fill="none" stroke="#bbd4e8" stroke-width="2"/>';
+ for(const node of nodes){const cx=x(node),cy=y(node),color=colors[node.level];
+ svg+='<g><rect x="'+(cx-43)+'" y="'+(cy-20)+'" width="86" height="40" rx="14" fill="'+color+'"/><text x="'+cx+'" y="'+(cy+5)+'" text-anchor="middle" fill="white" font-size="12" font-family="sans-serif">'+(node.level===0?'あなた':node.born+'か月目参加')+'</text><text x="'+cx+'" y="'+(cy+38)+'" text-anchor="middle" fill="#415570" font-size="11" font-family="sans-serif">直下 '+node.count+'人</text>';
+ if(node.hidden)svg+='<text x="'+cx+'" y="'+(cy+54)+'" text-anchor="middle" fill="#738198" font-size="10" font-family="sans-serif">'+(node.level===3?'この先 ':'ほか ')+node.hidden+'人を省略</text>';
+ svg+='</g>';
+ }
+ host.innerHTML=svg+'</svg>';
+ $('treeNote').textContent=omitted?'図は各人の最初の3人・下位3段までを抜粋。省略したメンバーの先にも同じルールで広がります。':'表示中の月のメンバーを全員描いています。';
+}
+function syncTreePreview(s){$('treeMonth').max=s.duration;$('treeMonth').value=selectedMonth;renderGroupTree(s,selectedMonth);}
+
+function renderResults(){const s=settings(),r=rows[selectedMonth];$('monthLabel').textContent=selectedMonth===0?'現在（0か月目）':`${selectedMonth}か月後`;$('sliderGuide').style.display=selectedMonth===0?'flex':'none';$('ratePill').textContent=r.invalid?'計算上限':`成績別 ${Math.round(r.rate*100)}%`;$('ratePill').className=`pill ${!r.invalid&&r.rate===.21?'success':''}`;$('growthPill').textContent=CONTINUOUS?'各人が毎月追加':`${s.interval}か月ごとに次の段`;const summary=(id,v)=>$(id).textContent=v;if(r.invalid){['count','groupPv','baseBonus','totalBonus'].forEach(id=>summary(id,'—'));summary('depth',`${r.depth}段目 / 計算上限`);$('excess').style.display='block';$('excess').textContent='理想化した累乗モデルの人数が100万人を超えたため、その月以降の金額を表示していません。';}else{summary('count',`${fmt(r.total)} 人`);summary('groupPv',`${fmt(r.groupPv)} PV`);summary('baseBonus',yen(r.base));summary('totalBonus',yen(r.totalBonus));summary('depth',CONTINUOUS?`直下フロント ${r.frontPv.length}人`:`${r.depth}段目まで形成`);$('excess').style.display='none';}const reached=rows.find(x=>x.month<=s.duration&&!x.invalid&&x.rate>=.21);$('milestone').textContent=reached?`21％到達の目安：${reached.month}か月後（150万PV以上）`:'予測期間内に21％未達';$('growthChart').innerHTML=svgLine(rows.filter(x=>x.month<=s.duration).map(x=>x.invalid?NaN:x.total),'#1774dd','人数');renderTiles(s,r);renderBreakdown(s,r);renderBonusQuick(s,r);renderFrontStats(s,r);syncTreePreview(s);document.querySelectorAll('#timelineBody tr').forEach(tr=>tr.classList.toggle('active',Number(tr.dataset.month)===selectedMonth));}
 function refresh(){configureMonth();const s=settings();rows=calcAll(s);renderResults();renderTable()}
 function csv(){
  const h=['経過月','人数','月間PV','グループ率','成績別ボーナス概算','BSI仮加算','ブロンズ9仮加算','ブロンズ15仮加算','6％リーダーシップ仮加算','ボーナス合計（計算可能な月のみ）'];
@@ -330,6 +365,7 @@ function resetInputs(){
 clearAppSavedInputs();
 ['pv','front','interval','duration','ratio','bsi','b9','b15','lb'].forEach(id=>$(id).addEventListener('input',refresh));
 $('month').addEventListener('input',e=>{selectedMonth=Number(e.target.value);renderResults()});
+$('treeMonth').addEventListener('input',e=>renderGroupTree(settings(),Number(e.target.value)));
 $('reset').addEventListener('click',resetInputs);
 $('csv').addEventListener('click',csv);
 // 初回読込で初期化。タブ切替では入力・選択月を保持。
