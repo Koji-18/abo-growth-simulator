@@ -100,7 +100,7 @@
 <section class="card" aria-label="月次ボーナス"><h2>月次ボーナス</h2><div id="breakdown" style="margin-top:12px"></div><div id="warnings" style="margin-top:12px"></div></section>
 <section class="card" aria-label="達成一時金の見込み"><div class="headrow"><div><h2>GP → PT → FPT の到達見込み</h2><div class="small">GP以降は毎月150万アワードPVを維持する仮定</div></div><span class="pill">新認定</span></div><div id="recognitionForecast" class="recognitionForecast"></div></section>
 <section class="card" aria-label="フロントとセカンドの達成率"><h2>フロント別の達成率</h2><div class="small">フロントと、その先のセカンド・サードそれぞれの「系列全体PV」に対する成績別ボーナス率です。各人の実際の受取額ではありません。</div><div id="frontStats" style="margin-top:12px"></div></section>
-<section class="card" aria-label="月ごとの推移"><div class="headrow"><div><h2>月ごとの推移</h2><div class="small">行を押すとその月の内訳が表示されます。</div></div><button class="action" id="csv" type="button">CSV保存</button></div><div class="scroll timelineScroll" style="margin-top:12px"><table class="timelineTable" aria-label="月ごとの推移"><colgroup><col class="tMonth"><col class="tPeople"><col class="tPv"><col class="tRate"><col class="tBonus"></colgroup><thead><tr><th scope="col">月</th><th scope="col">人数</th><th scope="col">PV</th><th scope="col">率</th><th scope="col">ボーナス</th></tr></thead><tbody id="timelineBody"></tbody></table></div><div class="small timelineFootnote">万・億は概数表示。行をタップすると詳しい金額を確認できます。</div></section>
+<section class="card" aria-label="月ごとの推移"><div class="headrow"><div><h2>月ごとの推移</h2><div class="small">行を押すとその月の内訳が表示されます。</div></div><button class="action" id="csv" type="button">CSV保存</button></div><div class="scroll timelineScroll" style="margin-top:12px"><table class="timelineTable" aria-label="月ごとの推移"><colgroup><col class="tMonth"><col class="tPeople"><col class="tPv"><col class="tRate"><col class="tBonus"></colgroup><thead><tr><th scope="col">月</th><th scope="col">人数</th><th scope="col">PV</th><th scope="col">率</th><th scope="col">ボーナス</th></tr></thead><tbody id="timelineBody"></tbody></table></div><div class="small timelineFootnote">万・億は概数表示。行をタップすると詳しい金額を確認できます。一時金が発生する月は合計額に含まれます。</div></section>
 <section class="card"><h2>この計算で想定していること</h2><p class="small" style="margin-bottom:7px">新しい段は設定した間隔ごとに一斉に増えます。全員が同じ平均PVを毎月継続し、購入停止・返品・継続率低下・新規登録月のずれは考慮しません。</p><p class="small" style="margin:0 0 7px">追加ボーナスと達成一時金は実績を仮定して試算しますが、過去の実績・正式認定・受給可能期間・個別の登録履歴は検証できません。チェック時の金額は<strong>条件を満たすと仮定した場合</strong>のみの参考値です。</p><p class="small" style="margin:0">リーダーシップ・ボーナスはチェック時のみ、月間PVと系列数から有資格SPを仮定して6％と最低保証調整を概算します（正式資格・会社審査や上位系列への特殊なパスアップなどは未確認）。達成一時金はGP・PT・FPTの新認定分のみを試算し、初回再認定分は含みません。その他の追加報酬、小売利益、経費、税金は含みません。本人購入分への8%消費税適用などは省略し、説明用の1:1.59比率を税込参考換算として使用しています。日本アムウェイの公式ツールではありません。</p></section>
 </div></div></main><footer>Ver 1.7 ｜ 根拠：日本アムウェイ「概要書面 2026年9月版」冊子14〜17・43〜47ページ。2026年11月時点の資料に基づく非公式の教育用試算です。一般公開・勧誘用途では会社の販売促進物等の規定、収入表示ルールを事前にご確認ください。</footer>
 <script>
@@ -179,7 +179,7 @@ function calcAll(s,track){
   let eligible9=0,eligible15=0,first9=null,first15=null;
   const today=new Date();
   const fiscalYear=m=>{const d=new Date(today.getFullYear(),today.getMonth()+m,1);return d.getFullYear()-(d.getMonth()<8?1:0)};
-  const end=Math.max(s.duration,track&&track.fpt?track.fpt.month:0);
+  const end=Math.max(s.duration,...(track?track.events.map(e=>e.month):[0]));
   return Array.from({length:end+1},(_,t)=>{
     const r=calculate(t,s),event=track&&track.byMonth[t]||null;
     r.oneTime=event?event.amount:0;
@@ -264,7 +264,7 @@ function renderBreakdown(s,r){
  }
  if(s.lb)html+=row('6％リーダーシップ',r.leadership,r.qualifyingFronts+'系列21％');
  if(s.achievement&&r.oneTime)html+=row('達成一時金',r.oneTime,r.recognitionName+' 新認定（仮定）');
- html+=row('月次ボーナス合計',r.totalBonus,'',true);
+ html+=row(s.achievement&&r.oneTime?'ボーナス合計（一時金込）':'月次ボーナス合計',r.totalBonus,'',true);
  $('breakdown').innerHTML=html;
  const notes=[];
  if(r.depth>=2)notes.push('セカンド以降の実績は直下フロント系列に含まれます。二重加算はしません。');
