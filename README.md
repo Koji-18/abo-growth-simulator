@@ -36,6 +36,29 @@
 - 小売利益・活動経費・税金、その他のインセンティブは含めません。
 - 人数は100万人を上限として計算を停止します。
 
+## Cloudflare Pages 公開手順（推奨）
+
+**公開前の確認：** アムウェイ概要書面のBSM・QAS等の規定に関する利用目的、承認要否を確認してください。Cloudflare Pagesの本番URLは一般にアクセスできます。
+
+1. https://dash.cloudflare.com/ にログインし、**Workers & Pages → Create application → Pages → Connect to Git** を選択します。
+2. GitHubを選び、リポジトリ **Koji-18/abo-growth-simulator** にCloudflare Pagesアプリがアクセスできるよう許可します。
+3. 以下の設定で **Save and Deploy** します（Pagesの画面表示名は変更される場合があります）。
+
+| 設定 | 値 |
+| --- | --- |
+| Project name | `abo-growth-simulator`（未使用の場合） |
+| Production branch | `main` |
+| Framework preset | `None`（フレームワークなし） |
+| Build command | 空欄（または `exit 0`） |
+| Build output directory | `.`（リポジトリ直下） |
+| Root directory (advanced) | 変更しない |
+
+公開URLは選択できたプロジェクト名に応じて `https://<project-name>.pages.dev/` となります。**GitHubのユーザー名はCloudflareのサイトURLに含まれません。**
+
+Cloudflare PagesのGit連携では、`main` ブランチへの変更が自動的にデプロイされます。初回公開後はCloudflareの「Deployments」画面で「Success」を確認し、URLを開いて入力・計算・チェックボックス・CSV出力を検証してください。
+
+公式資料: https://developers.cloudflare.com/pages/get-started/git-integration/ および https://developers.cloudflare.com/pages/framework-guides/deploy-anything/
+
 ## GitHub Pages 公開手順
 
 **注意：一般公開前に、日本アムウェイへ利用目的・BSM等の規定に基づく承認要否を確認してください。**
