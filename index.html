@@ -76,11 +76,31 @@ nav.wrap{max-width:1160px;margin:auto}nav p{margin-bottom:22px}#recognitionForec
 .timelineTable .bonusExact{white-space:normal;overflow-wrap:anywhere}
 @media(max-width:650px){.timelineTable .tMonth{width:8%}.timelineTable .tPeople{width:18%}.timelineTable .tPv{width:23%}.timelineTable .tRate{width:10%}.timelineTable .tBonus{width:41%}.timelineTable td:last-child{font-size:clamp(10px,2.7vw,12px)}}
 .modelTabs{display:flex;gap:4px;padding:4px;border-radius:12px;background:#e4ebf5;max-width:560px}.modelTabs button{flex:1;min-width:0;border:0;border-radius:9px;padding:12px 8px;color:#415570;background:transparent;font-weight:700;font-size:clamp(11px,3vw,14px)}.modelTabs button[aria-selected="true"]{background:#fff;color:#145fb6;box-shadow:0 2px 6px #17396920}.modelTabs button:focus-visible{outline:2px solid #1774dd;outline-offset:2px}
+
+/* Compact header and mobile sticky model tabs. */
+header{padding:18px 20px 20px}
+header h1{font-size:clamp(21px,3vw,28px);margin:5px 0;line-height:1.35}
+header p{font-size:13px;line-height:1.55}
+header .eyebrow{font-size:10px;letter-spacing:.1em}
+nav.modelNav{padding:10px 16px}
+main{margin:0 auto}
+.modelTabs{padding:3px}
+.modelTabs button{padding:7px 8px;min-height:36px;line-height:1.4}
+@media(max-width:800px){
+ html{scroll-padding-top:64px}
+ header{padding:12px 14px 14px}
+ header h1{font-size:clamp(19px,5.2vw,23px);margin:4px 0}
+ header p{font-size:12px}
+ header .eyebrow{font-size:9px;letter-spacing:.06em}
+ nav.modelNav{position:sticky;top:0;z-index:100;padding:6px 10px;background:var(--bg);box-shadow:0 2px 6px rgba(23,40,61,.08)}
+ .modelTabs{max-width:none}
+ .modelTabs button{font-size:clamp(11px,3.1vw,14px)}
+}
 </style>
 </head>
 <body>
 <header><div class="wrap"><div class="eyebrow">Growth &amp; Bonus Calculator · Ver 1.9.1 · 非公式</div><h1>ABO グループ成長シミュレーター</h1><p>グループが数ヶ月後に何人になるか、未来の変化を見てみよう！</p></div></header>
-<nav class="wrap" style="padding:16px"><div class="modelTabs" role="tablist" aria-label="成長モデル"><button type="button" role="tab" id="stageTab" aria-controls="modelPanel" aria-selected="true">段階モデル</button><button type="button" role="tab" id="continuousTab" aria-controls="modelPanel" aria-selected="false" tabindex="-1">継続スポンサリングモデル</button></div><p class="small">新規メンバーは翌月からスポンサリング。製品購入は当月からで継続を仮定。</p></nav><main id="modelPanel" role="tabpanel" aria-labelledby="stageTab"><div class="layout"><section class="card sticky" aria-label="入力設定">
+<nav class="wrap modelNav"><div class="modelTabs" role="tablist" aria-label="成長モデル"><button type="button" role="tab" id="stageTab" aria-controls="modelPanel" aria-selected="true">段階モデル</button><button type="button" role="tab" id="continuousTab" aria-controls="modelPanel" aria-selected="false" tabindex="-1">継続スポンサリングモデル</button></div></nav><main id="modelPanel" role="tabpanel" aria-labelledby="stageTab"><div class="layout"><section class="card sticky" aria-label="入力設定">
 <div class="steps"><h2>かんたん設定</h2><span class="step"><b>3項目</b> からスタート</span></div>
 <div class="field"><label for="pv">① 1人あたりの平均購入PV（毎月）</label><div class="control"><input id="pv" type="number" min="0" max="100" step="0.1" value="1"><span class="unit">万PV / 人</span></div><div class="hint">本人・各ABOが毎月同じPVを維持すると仮定</div></div>
 <div class="field"><label id="frontLabel" for="front">② 1人あたりのフロント人数</label><div class="control"><input id="front" type="number" min="0" max="12" step="1" value="3"><span class="unit">人 / 人</span></div><div class="hint">本人も、その先のメンバーも、全員が同じ人数ずつスポンサリングすると仮定</div></div>
