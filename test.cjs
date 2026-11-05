@@ -31,5 +31,11 @@ for(const route of ['index.html','continuous.html','continuous']){
 
  if(file==='continuous.html'){for(const n of [1,2,3,30]){els.front.value=String(n);els.front.input();els.month.input({target:{value:'3'}});assert.equal(els.count.textContent,((1+n)**3).toLocaleString('ja-JP')+' 人');}els.front.value='1';els.front.input();els.month.input({target:{value:'12'}});assert.equal(els.count.textContent,'4,096 人');assert.match(els.frontStats.innerHTML,/直下フロント：<strong>12人/);assert.match(els.frontStats.innerHTML,/直下フロント：<strong>11人/);}
 assert.ok(!html.includes('id="achievement"'));
+ const before=els.count.textContent,bonus=els.totalBonus.textContent,monthValue=els.month.value;
+ els.treeMonth.input({target:{value:'12'}});
+ assert.equal(els.count.textContent,before);assert.equal(els.totalBonus.textContent,bonus);assert.equal(els.month.value,monthValue);
+ assert.ok(els.treeCanvas.innerHTML.includes('<svg'));assert.ok((els.treeCanvas.innerHTML.match(/<g>/g)||[]).length<=40);
+ els.treeMonth.input({target:{value:'0'}});assert.equal((els.treeCanvas.innerHTML.match(/<g>/g)||[]).length,1);
+
 }
 console.log('All incentive boundaries, growth models, and both page initializations passed');
