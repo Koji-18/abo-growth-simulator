@@ -75,15 +75,16 @@ nav.wrap{max-width:1160px;margin:auto}nav p{margin-bottom:22px}#recognitionForec
 .timelineTable td:last-child{white-space:normal;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
 .timelineTable .bonusExact{white-space:normal;overflow-wrap:anywhere}
 @media(max-width:650px){.timelineTable .tMonth{width:8%}.timelineTable .tPeople{width:18%}.timelineTable .tPv{width:23%}.timelineTable .tRate{width:10%}.timelineTable .tBonus{width:41%}.timelineTable td:last-child{font-size:clamp(10px,2.7vw,12px)}}
+.modelTabs{display:flex;gap:4px;padding:4px;border-radius:12px;background:#e4ebf5;max-width:560px}.modelTabs button{flex:1;min-width:0;border:0;border-radius:9px;padding:12px 8px;color:#415570;background:transparent;font-weight:700;font-size:clamp(11px,3vw,14px)}.modelTabs button[aria-selected="true"]{background:#fff;color:#145fb6;box-shadow:0 2px 6px #17396920}.modelTabs button:focus-visible{outline:2px solid #1774dd;outline-offset:2px}
 </style>
 </head>
 <body>
 <header><div class="wrap"><div class="eyebrow">Growth &amp; Bonus Calculator · Ver 1.9.1 · 非公式</div><h1>ABO グループ成長シミュレーター</h1><p>グループが数ヶ月後に何人になるか、未来の変化を見てみよう！</p></div></header>
-<nav class="wrap" style="padding:16px"><a href="index.html">段階モデル</a> ｜ <a href="continuous.html">継続スポンサリングモデル</a><p class="small">新規メンバーは翌月からスポンサリング。製品購入は当月からで継続を仮定。</p></nav><main><div class="layout"><section class="card sticky" aria-label="入力設定">
+<nav class="wrap" style="padding:16px"><div class="modelTabs" role="tablist" aria-label="成長モデル"><button type="button" role="tab" id="stageTab" aria-controls="modelPanel" aria-selected="true">段階モデル</button><button type="button" role="tab" id="continuousTab" aria-controls="modelPanel" aria-selected="false" tabindex="-1">継続スポンサリングモデル</button></div><p class="small">新規メンバーは翌月からスポンサリング。製品購入は当月からで継続を仮定。</p></nav><main id="modelPanel" role="tabpanel" aria-labelledby="stageTab"><div class="layout"><section class="card sticky" aria-label="入力設定">
 <div class="steps"><h2>かんたん設定</h2><span class="step"><b>3項目</b> からスタート</span></div>
 <div class="field"><label for="pv">① 1人あたりの平均購入PV（毎月）</label><div class="control"><input id="pv" type="number" min="0" max="100" step="0.1" value="1"><span class="unit">万PV / 人</span></div><div class="hint">本人・各ABOが毎月同じPVを維持すると仮定</div></div>
-<div class="field"><label for="front">② 1人あたりのフロント人数</label><div class="control"><input id="front" type="number" min="0" max="12" step="1" value="3"><span class="unit">人 / 人</span></div><div class="hint">本人も、その先のメンバーも、全員が同じ人数ずつ増やすと仮定</div></div>
-<div class="field"><label for="interval">③ 次の段が増えるまでの期間</label><div class="control"><select id="interval"><option value="1" selected>1か月ごと</option><option value="2">2か月ごと</option><option value="3">3か月ごと</option><option value="4">4か月ごと</option><option value="6">6か月ごと</option><option value="12">12か月ごと</option></select></div></div>
+<div class="field"><label id="frontLabel" for="front">② 1人あたりのフロント人数</label><div class="control"><input id="front" type="number" min="0" max="12" step="1" value="3"><span class="unit">人 / 人</span></div><div class="hint">本人も、その先のメンバーも、全員が同じ人数ずつスポンサリングすると仮定</div></div>
+<div class="field" id="intervalField"><label for="interval">③ 次の段が増えるまでの期間</label><div class="control"><select id="interval"><option value="1" selected>1か月ごと</option><option value="2">2か月ごと</option><option value="3">3か月ごと</option><option value="4">4か月ごと</option><option value="6">6か月ごと</option><option value="12">12か月ごと</option></select></div></div>
 <div class="field"><label for="duration">何か月先まで見る？</label><div class="control"><select id="duration"><option value="12" selected>12か月</option><option value="18">18か月</option><option value="24">24か月</option><option value="36">36か月</option></select></div></div>
 <div style="border-top:1px solid var(--border);margin-top:13px;padding-top:13px"><h3>追加ボーナスを含める <span class="small" style="font-weight:400">（任意）</span></h3>
 <label class="toggle"><input type="checkbox" id="bsi"><span class="checktxt"><span>BSI（リピート・オーダー含む）</span></span></label>
@@ -103,12 +104,12 @@ nav.wrap{max-width:1160px;margin:auto}nav p{margin-bottom:22px}#recognitionForec
 <section class="card" aria-label="月次ボーナス"><h2>月次ボーナス</h2><div id="breakdown" style="margin-top:12px"></div><div id="warnings" style="margin-top:12px"></div></section>
 <section class="card" aria-label="フロントとセカンドの達成率"><h2>フロント別の達成率</h2><div class="small">フロントと、その先のセカンド・サードそれぞれの「系列全体PV」に対する成績別ボーナス率です。各人の実際の受取額ではありません。</div><div id="frontStats" style="margin-top:12px"></div></section>
 <section class="card" aria-label="月ごとの推移"><div class="headrow"><div><h2>月ごとの推移</h2></div><button class="action" id="csv" type="button">CSV保存</button></div><div class="scroll timelineScroll" style="margin-top:12px"><table class="timelineTable" aria-label="月ごとの推移"><colgroup><col class="tMonth"><col class="tPeople"><col class="tPv"><col class="tRate"><col class="tBonus"></colgroup><thead><tr><th scope="col">月</th><th scope="col">人数</th><th scope="col">PV</th><th scope="col">率</th><th scope="col">ボーナス</th></tr></thead><tbody id="timelineBody"></tbody></table></div></section>
-<section class="card"><h2>この計算で想定していること</h2><p class="small" style="margin-bottom:7px">新しい段は設定した間隔ごとに一斉に増えます。全員が同じ平均PVを毎月継続し、購入停止・返品・継続率低下・新規登録月のずれは考慮しません。</p><p class="small" style="margin:0 0 7px">追加ボーナスは実績を仮定して試算しますが、過去の実績・正式認定・受給可能期間・個別の登録履歴は検証できません。チェック時の金額は<strong>条件を満たすと仮定した場合</strong>のみの参考値です。</p><p class="small" style="margin:0">リーダーシップ・ボーナスはチェック時のみ、月間PVと系列数から有資格SPを仮定して6％と最低保証調整を概算します（正式資格・会社審査や上位系列への特殊なパスアップなどは未確認）。BSI内のリピートは本人が今月新規登録し初月から1万PVを継続した仮定で、3/6/9/12月目に千/2千/3千/6千円。紹介者分を本人へ加算しません。初達成は登録・切替月を含む3月以内、1組1回のみ。初月達成・翌月未達・翌々月再達成は翌々月を起点とする例外があります。その他の追加報酬、小売利益、経費、税金は含みません。成績別ボーナスの換算比率の初期値は1:1.446（税抜BVの平均値）です。商品別の税率は再現しません。日本アムウェイの公式ツールではありません。</p></section>
+<section class="card"><h2>この計算で想定していること</h2><p id="modelAssumption" class="small" style="margin-bottom:7px">新しい段は設定した間隔ごとに一斉に増えます。全員が同じ平均PVを毎月継続し、購入停止・返品・継続率低下・新規登録月のずれは考慮しません。</p><p class="small" style="margin:0 0 7px">追加ボーナスは実績を仮定して試算しますが、過去の実績・正式認定・受給可能期間・個別の登録履歴は検証できません。チェック時の金額は<strong>条件を満たすと仮定した場合</strong>のみの参考値です。</p><p class="small" style="margin:0">リーダーシップ・ボーナスはチェック時のみ、月間PVと系列数から有資格SPを仮定して6％と最低保証調整を概算します（正式資格・会社審査や上位系列への特殊なパスアップなどは未確認）。BSI内のリピートは本人が今月新規登録し初月から1万PVを継続した仮定で、3/6/9/12月目に千/2千/3千/6千円。紹介者分を本人へ加算しません。初達成は登録・切替月を含む3月以内、1組1回のみ。初月達成・翌月未達・翌々月再達成は翌々月を起点とする例外があります。その他の追加報酬、小売利益、経費、税金は含みません。成績別ボーナスの換算比率の初期値は1:1.446（税抜BVの平均値）です。商品別の税率は再現しません。日本アムウェイの公式ツールではありません。</p></section>
 </div></div></main><footer>Ver 1.9.1 ｜ 根拠：日本アムウェイ「ビジネスサポート2027」冊子10〜21頁。既存の成績別計算は概要書面2026年9月版に基づく。2026年11月時点の資料に基づく非公式の教育用試算です。一般公開・勧誘用途では会社の販売促進物等の規定、収入表示ルールを事前にご確認ください。</footer>
 <script src="incentives.js"></script>
 <script>
 (()=>{'use strict';
-const CONTINUOUS=/\/continuous(?:\.html)?\/?$/.test(location.pathname);
+let CONTINUOUS=/\/continuous(?:\.html)?\/?$/.test(location.pathname);
 const tiers=[[1500000,.21],[1000000,.18],[600000,.15],[360000,.12],[180000,.09],[90000,.06],[30000,.03],[0,0]];
 const MAX_PEOPLE=1000000;
 const $=id=>document.getElementById(id), fmt=n=>Number.isFinite(n)?Math.round(n).toLocaleString('ja-JP'):'—', yen=n=>Number.isFinite(n)?`${n<0?'-':''}¥${fmt(Math.abs(n))}`:'—';
@@ -121,7 +122,7 @@ const bsiAmount=n=>n<=0?0:n===1?2000:n===2?4000:n===3?9000:n===4?12000:n===5?150
 const savedKeyPattern=/^abo-sim-v\d+$/;
 let rows=[], selectedMonth=0;
 function branchSize(k,depth){let sum=0,gen=1;for(let i=0;i<depth;i++){sum+=gen;if(sum>MAX_PEOPLE)return Infinity;gen*=k;}return sum;}
-function calculate(t,s){const depth=Math.floor(t/s.interval), sizes=CONTINUOUS?Incentives.continuous(s.fronts.length,t):s.fronts.map(k=>branchSize(k,depth)),total=1+sizes.reduce((a,b)=>a+b,0);if(!Number.isFinite(total)||total>MAX_PEOPLE)return{month:t,depth,invalid:true};const groupPv=total*s.pv, groupBv=groupPv*1.446, taxRatio=s.ratio, rate=bonusRate(groupPv), frontPv=sizes.map(size=>size*s.pv), frontRates=frontPv.map(bonusRate), allEquivalent=groupPv*taxRatio*rate, directEquivalent=frontPv.reduce((sum,pv,i)=>sum+pv*taxRatio*frontRates[i],0), base=Math.max(0,Math.round(allEquivalent-directEquivalent));const qualifyingFronts=frontRates.reduce((a,x)=>a+(x===.21?1:0),0),awardPv=s.pv+frontPv.reduce((a,x,i)=>a+(frontRates[i]<.21?x:0),0), spType=awardPv>=1500000?'I':qualifyingFronts>=1&&awardPv>=600000?'II':qualifyingFronts>=2?'III':null;
+function calculate(t,s){const depth=CONTINUOUS?t:Math.floor(t/s.interval), sizes=CONTINUOUS?Incentives.continuous(s.fronts.length,t):s.fronts.map(k=>branchSize(k,depth)),total=1+sizes.reduce((a,b)=>a+b,0);if(!Number.isFinite(total)||total>MAX_PEOPLE)return{month:t,depth,invalid:true};const groupPv=total*s.pv, groupBv=groupPv*1.446, taxRatio=s.ratio, rate=bonusRate(groupPv), frontPv=sizes.map(size=>size*s.pv), frontRates=frontPv.map(bonusRate), allEquivalent=groupPv*taxRatio*rate, directEquivalent=frontPv.reduce((sum,pv,i)=>sum+pv*taxRatio*frontRates[i],0), base=Math.max(0,Math.round(allEquivalent-directEquivalent));const qualifyingFronts=frontRates.reduce((a,x)=>a+(x===.21?1:0),0),awardPv=s.pv+frontPv.reduce((a,x,i)=>a+(frontRates[i]<.21?x:0),0), spType=awardPv>=1500000?'I':qualifyingFronts>=1&&awardPv>=600000?'II':qualifyingFronts>=2?'III':null;
 const sixPercent=frontPv.reduce((a,x,i)=>a+(frontRates[i]===.21?x*1.446*.06*1.1:0),0);
 const awardEquivalent=awardPv*1.446*.06*1.1;
 const minimum=1500000*1.446*.06*1.1;
@@ -276,7 +277,7 @@ function renderTable(){
     renderResults();
   }));
 }
-function renderResults(){const s=settings(),r=rows[selectedMonth];$('monthLabel').textContent=selectedMonth===0?'現在（0か月目）':`${selectedMonth}か月後`;$('sliderGuide').style.display=selectedMonth===0?'flex':'none';$('ratePill').textContent=r.invalid?'計算上限':`成績別 ${Math.round(r.rate*100)}%`;$('ratePill').className=`pill ${!r.invalid&&r.rate===.21?'success':''}`;$('growthPill').textContent=CONTINUOUS?'各人が毎月追加':`${s.interval}か月ごとに次の段`;const summary=(id,v)=>$(id).textContent=v;if(r.invalid){['count','groupPv','baseBonus','totalBonus'].forEach(id=>summary(id,'—'));summary('depth',`${r.depth}段目 / 計算上限`);$('excess').style.display='block';$('excess').textContent='理想化した累乗モデルの人数が100万人を超えたため、その月以降の金額を表示していません。';}else{summary('count',`${fmt(r.total)} 人`);summary('groupPv',`${fmt(r.groupPv)} PV`);summary('baseBonus',yen(r.base));summary('totalBonus',yen(r.totalBonus));summary('depth',`${r.depth}段目まで形成`);$('excess').style.display='none';}const reached=rows.find(x=>x.month<=s.duration&&!x.invalid&&x.rate>=.21);$('milestone').textContent=reached?`21％到達の目安：${reached.month}か月後（150万PV以上）`:'予測期間内に21％未達';$('growthChart').innerHTML=svgLine(rows.filter(x=>x.month<=s.duration).map(x=>x.invalid?NaN:x.total),'#1774dd','人数');renderTiles(s,r);renderBreakdown(s,r);renderBonusQuick(s,r);renderFrontStats(s,r);document.querySelectorAll('#timelineBody tr').forEach(tr=>tr.classList.toggle('active',Number(tr.dataset.month)===selectedMonth));}
+function renderResults(){const s=settings(),r=rows[selectedMonth];$('monthLabel').textContent=selectedMonth===0?'現在（0か月目）':`${selectedMonth}か月後`;$('sliderGuide').style.display=selectedMonth===0?'flex':'none';$('ratePill').textContent=r.invalid?'計算上限':`成績別 ${Math.round(r.rate*100)}%`;$('ratePill').className=`pill ${!r.invalid&&r.rate===.21?'success':''}`;$('growthPill').textContent=CONTINUOUS?'各人が毎月追加':`${s.interval}か月ごとに次の段`;const summary=(id,v)=>$(id).textContent=v;if(r.invalid){['count','groupPv','baseBonus','totalBonus'].forEach(id=>summary(id,'—'));summary('depth',`${r.depth}段目 / 計算上限`);$('excess').style.display='block';$('excess').textContent='理想化した累乗モデルの人数が100万人を超えたため、その月以降の金額を表示していません。';}else{summary('count',`${fmt(r.total)} 人`);summary('groupPv',`${fmt(r.groupPv)} PV`);summary('baseBonus',yen(r.base));summary('totalBonus',yen(r.totalBonus));summary('depth',CONTINUOUS?`直下フロント ${r.frontPv.length}人`:`${r.depth}段目まで形成`);$('excess').style.display='none';}const reached=rows.find(x=>x.month<=s.duration&&!x.invalid&&x.rate>=.21);$('milestone').textContent=reached?`21％到達の目安：${reached.month}か月後（150万PV以上）`:'予測期間内に21％未達';$('growthChart').innerHTML=svgLine(rows.filter(x=>x.month<=s.duration).map(x=>x.invalid?NaN:x.total),'#1774dd','人数');renderTiles(s,r);renderBreakdown(s,r);renderBonusQuick(s,r);renderFrontStats(s,r);document.querySelectorAll('#timelineBody tr').forEach(tr=>tr.classList.toggle('active',Number(tr.dataset.month)===selectedMonth));}
 function refresh(){configureMonth();const s=settings();rows=calcAll(s);renderResults();renderTable()}
 function csv(){
  const h=['経過月','人数','月間PV','グループ率','成績別ボーナス概算','BSI仮加算','ブロンズ9仮加算','ブロンズ15仮加算','6％リーダーシップ仮加算','ボーナス合計（計算可能な月のみ）'];
@@ -311,8 +312,24 @@ clearAppSavedInputs();
 $('month').addEventListener('input',e=>{selectedMonth=Number(e.target.value);renderResults()});
 $('reset').addEventListener('click',resetInputs);
 $('csv').addEventListener('click',csv);
-// 通常の再読込に加え、戻る操作でブラウザのページキャッシュから復帰した場合も初期化。
-window.addEventListener('pageshow',resetInputs);
+// 初回読込で初期化。タブ切替では入力・選択月を保持。
+function renderModelTabs(){
+ $('stageTab').setAttribute('aria-selected',String(!CONTINUOUS));
+ $('continuousTab').setAttribute('aria-selected',String(CONTINUOUS));
+ $('stageTab').tabIndex=CONTINUOUS?-1:0;
+ $('continuousTab').tabIndex=CONTINUOUS?0:-1;
+ $('modelPanel').setAttribute('aria-labelledby',CONTINUOUS?'continuousTab':'stageTab');
+ $('intervalField').hidden=CONTINUOUS;
+ $('frontLabel').textContent=CONTINUOUS?'② 各人が毎月追加紹介する人数':'② 1人あたりのフロント人数';
+ $('modelAssumption').textContent=(CONTINUOUS?'全員が参加翌月から毎月指定人数をスポンサリングします。':'新しい段は設定した間隔ごとに一斉に増えます。')+'全員が同じ平均PVを毎月継続し、購入停止・返品・継続率低下・新規登録月のずれは考慮しません。';
+}
+function switchModel(continuous){CONTINUOUS=continuous;renderModelTabs();refresh();}
+$('stageTab').addEventListener('click',()=>switchModel(false));
+$('continuousTab').addEventListener('click',()=>switchModel(true));
+for(const id of ['stageTab','continuousTab'])$(id).addEventListener('keydown',e=>{
+ if(['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();switchModel(e.key==='Home'?false:e.key==='End'?true:!CONTINUOUS);$(CONTINUOUS?'continuousTab':'stageTab').focus();}
+});
+renderModelTabs();
 resetInputs();
 })();
 </script>
