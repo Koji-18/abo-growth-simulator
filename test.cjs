@@ -16,13 +16,20 @@ for(const route of ['index.html','continuous.html','continuous']){
  const context={Incentives:I,location:{pathname:'/'+route},document:{getElementById:id=>{assert.ok(els[id],id);return els[id]},querySelectorAll:()=>[]},window:{addEventListener(){}},localStorage:{},Date,Intl,console};
  vm.runInNewContext(html.match(/<script>([\s\S]*?)<\/script>/)[1],context);
  assert.equal(els.count.textContent,'1 人');
+ const options=html.match(/<select id="front">([\s\S]*?)<\/select>/)[1];
+ assert.equal((options.match(/<option /g)||[]).length,30);
+ assert.match(options,/<option value="1">1<\/option>/);
+ assert.match(options,/<option value="30">30<\/option>/);
  els.pv.value='2';els.front.value='1';els.interval.value='2';els.front.input();els.month.input({target:{value:'3'}});
  els.continuousTab.click();assert.equal(els.count.textContent,'8 人');assert.equal(els.pv.value,'2');assert.equal(els.interval.value,'2');assert.equal(els.intervalField.hidden,true);
  els.stageTab.click();assert.equal(els.count.textContent,'2 人');assert.equal(els.pv.value,'2');assert.equal(els.intervalField.hidden,false);
+ els.front.value='30';els.interval.value='1';els.stageTab.click();els.month.input({target:{value:'2'}});assert.equal(els.count.textContent,'931 人');
+ els.continuousTab.click();assert.equal(els.count.textContent,'961 人');
+ els.month.input({target:{value:'5'}});assert.equal(els.count.textContent,'—');
  els.reset.click();assert.equal(els.count.textContent,'1 人');assert.equal(els.pv.value,'1');
  if(file==='continuous.html')els.continuousTab.click();
 
- if(file==='continuous.html'){for(const n of [0,1,2,3]){els.front.value=String(n);els.front.input();els.month.input({target:{value:'3'}});assert.equal(els.count.textContent,((1+n)**3).toLocaleString('ja-JP')+' 人');}els.front.value='1';els.front.input();els.month.input({target:{value:'12'}});assert.equal(els.count.textContent,'4,096 人');assert.match(els.frontStats.innerHTML,/直下フロント：<strong>12人/);assert.match(els.frontStats.innerHTML,/直下フロント：<strong>11人/);}
+ if(file==='continuous.html'){for(const n of [1,2,3,30]){els.front.value=String(n);els.front.input();els.month.input({target:{value:'3'}});assert.equal(els.count.textContent,((1+n)**3).toLocaleString('ja-JP')+' 人');}els.front.value='1';els.front.input();els.month.input({target:{value:'12'}});assert.equal(els.count.textContent,'4,096 人');assert.match(els.frontStats.innerHTML,/直下フロント：<strong>12人/);assert.match(els.frontStats.innerHTML,/直下フロント：<strong>11人/);}
 assert.ok(!html.includes('id="achievement"'));
 }
 console.log('All incentive boundaries, growth models, and both page initializations passed');
