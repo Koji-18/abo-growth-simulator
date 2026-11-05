@@ -5,7 +5,7 @@ const known=x=>typeof x==='number'&&Number.isFinite(x)&&x>=0;
 const integer=(x,max)=>known(x)&&Number.isInteger(x)&&x<=max;
 const compare=(a,b)=>a>b?0:a===b?1:2;
 const api={
- continuous(n,t){if(!integer(n,12)||!integer(t,72))throw Error('Invalid growth input');return Array.from({length:n*t},(_,i)=>(1+n)**(t-1-Math.floor(i/n)));},
+ continuous(n,t){if(!integer(n,30)||!integer(t,72))throw Error('Invalid growth input');return Array.from({length:n*t},(_,i)=>(1+n)**(t-1-Math.floor(i/n)));},
  repeat(pvs,registration,eligible){
   if(!eligible||registration<'2026-09'||pvs.some(x=>!known(x)))return null;
   let start=pvs.slice(0,3).findIndex(x=>x>=10000);if(start<0)return 0;
