@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="ABO向け、グループ人数・PV・条件付きボーナスの非公式シミュレーター">
-<title>ABO グループ成長シミュレーター v1.2（非公式）</title>
+<title>ABO グループ成長シミュレーター v1.3（非公式）</title>
 <style>
 :root{--bg:#f6f8fc;--paper:#fff;--ink:#17283d;--sub:#63738a;--border:#e1e8f0;--blue:#176de0;--pale:#eaf2ff;--mint:#e9f8f2;--green:#167351;--warn:#955e16;--warnbg:#fff7e9;--shadow:0 10px 32px rgba(31,59,93,.055)}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Hiragino Sans",Meiryo,sans-serif;font-size:14px;line-height:1.65}button,input,select{font:inherit}button{cursor:pointer}header{background:linear-gradient(115deg,#153969,#0c64a5);color:#fff;padding:30px 20px 35px}header .wrap{max-width:1160px;margin:auto}.eyebrow{text-transform:uppercase;letter-spacing:.14em;font-weight:700;font-size:11px;opacity:.78}h1{font-size:clamp(23px,3.8vw,34px);margin:7px 0 6px;line-height:1.4;font-weight:800}header p{margin:0;color:#d9ecff;max-width:770px}main{max-width:1160px;margin:-16px auto 0;padding:0 16px 32px;position:relative}.layout{display:grid;grid-template-columns:minmax(290px,360px) minmax(0,1fr);gap:16px;align-items:start}.card{background:var(--paper);border:1px solid var(--border);border-radius:19px;padding:20px;box-shadow:var(--shadow);min-width:0}.sticky{position:sticky;top:12px}.card h2{font-size:17px;line-height:1.4;margin:0 0 5px}.card h3{font-size:14px;margin:0 0 10px}.small{font-size:12px;color:var(--sub)}.muted{color:var(--sub)}.steps{display:flex;align-items:center;justify-content:space-between;gap:8px;border-bottom:1px solid var(--border);padding-bottom:14px;margin-bottom:15px}.step{font-size:12px;color:var(--sub)}.step b{color:var(--blue);background:var(--pale);padding:4px 9px;border-radius:100px}.field{margin:13px 0}.field label{display:block;font-size:13px;font-weight:700;margin-bottom:5px}.field .hint{font-size:11px;color:var(--sub);font-weight:400;margin-top:2px}.control{display:flex;align-items:center;gap:8px}.control input,.control select{display:block;width:100%;height:41px;border:1px solid #cdd8e5;border-radius:11px;background:#fff;padding:6px 11px;outline:none;color:var(--ink)}.control input:focus,.control select:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(23,109,224,.13)}.unit{min-width:58px;text-align:right;color:var(--sub);font-size:12px}.pale{background:#f5f8fd;border:1px solid var(--border);border-radius:12px;padding:11px 12px}.branches{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.branchItem{border:1px solid var(--border);border-radius:12px;padding:8px;background:#fff}.branchItem label{font-size:11px;font-weight:700;margin:0 0 4px;display:block}.branchItem input{width:100%;height:35px;border-radius:8px;border:1px solid #cdd8e5;padding:5px 6px;text-align:center;font-variant-numeric:tabular-nums}.toggle{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:11px 0;border-bottom:1px solid var(--border);cursor:pointer}.toggle:last-child{border:0}.toggle input{accent-color:var(--blue);height:18px;width:18px;cursor:pointer}.toggle span{display:block;font-size:13px;font-weight:700}.toggle small{display:block;font-size:11px;color:var(--sub);font-weight:400}.toggle .checktxt{flex:1}details{border-top:1px solid var(--border);margin-top:14px;padding-top:10px}summary{cursor:pointer;font-weight:700;font-size:12px;color:#355575}details[open] summary{margin-bottom:8px}.action{background:#fff;border:1px solid #b8c9dc;border-radius:10px;color:#355575;padding:8px 13px;font-weight:700}.action:hover{background:#f3f7fd}.action:focus-visible{outline:3px solid #77aaff}.headrow{display:flex;justify-content:space-between;align-items:start;gap:12px;flex-wrap:wrap}.pill{background:var(--pale);border:1px solid #d6e6fd;color:#1457ab;border-radius:99px;font-size:11px;font-weight:800;padding:3px 10px}.pill.success{background:var(--mint);color:var(--green);border-color:#c6e9d8}.kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:14px 0}.kpi{background:#f5f8fd;border-radius:13px;padding:13px;min-width:0}.kpi.main{background:#eaf2ff}.kpi .label{font-size:11px;color:var(--sub)}.kpi .value{font-size:clamp(19px,2.7vw,27px);font-weight:800;font-variant-numeric:tabular-nums;line-height:1.4;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.kpi .sub{font-size:11px;color:var(--sub)}.rangebar{margin-top:11px}.rangebar label{display:flex;justify-content:space-between;font-weight:700;align-items:center}.rangebar input{width:100%;accent-color:var(--blue);margin:10px 0 2px}.gridright{display:grid;gap:16px}.stack{display:grid;gap:16px}.detailrow{display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding:8px 0;border-bottom:1px solid var(--border)}.detailrow:last-child{border:0}.detailrow strong{font-size:15px;font-variant-numeric:tabular-nums}.detailrow .left{max-width:75%}.detailrow .left small{display:block;color:var(--sub);font-size:11px;font-weight:400}.total{border-top:2px solid #c7d9f5;padding-top:11px;margin-top:5px}.total strong{color:#0b56b4;font-size:23px}.notice{padding:12px 13px;background:var(--warnbg);border:1px solid #f3dfba;color:#72521e;border-radius:13px;font-size:12px;line-height:1.7}.notice + .notice{margin-top:8px}.notice.info{background:#edf6ff;border-color:#d5e8fd;color:#285c90}.chart{width:100%;height:200px;display:block;overflow:visible}.chart svg{display:block;width:100%;height:100%}.chartbox{background:#fbfcff;border:1px solid var(--border);border-radius:13px;padding:6px 8px 0}.legend{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--sub)}.dot{height:8px;width:8px;background:#1874dd;border-radius:99px}table{width:100%;border-collapse:collapse;font-size:12px;white-space:nowrap}th,td{text-align:right;border-bottom:1px solid var(--border);padding:9px 8px;font-variant-numeric:tabular-nums}th:first-child,td:first-child{text-align:left}thead{background:#f4f7fc}tbody tr.active{background:#ebf3ff}tbody tr{cursor:pointer}tbody tr:hover{background:#f1f7ff}.scroll{overflow:auto;max-height:390px;border:1px solid var(--border);border-radius:12px}footer{max-width:1160px;margin:0 auto;padding:4px 18px 32px;color:var(--sub);font-size:12px}.modelgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:12px 0}.modelbox{padding:10px 7px;border-radius:10px;background:#eff5fc;text-align:center;border:1px solid #dbe9f7}.modelbox b{font-size:16px;display:block}.modelbox span{font-size:10px;color:var(--sub)}.textbtn{border:0;background:none;color:var(--blue);font-weight:700;text-decoration:underline;padding:3px;cursor:pointer}.noData{padding:12px;color:#9a4f30;background:#fff0e8;border-radius:9px;font-size:12px}a{color:#145fb6}@media(max-width:800px){main{padding:0 10px 26px}.layout{grid-template-columns:1fr}.sticky{position:static}.card{padding:17px}.kpi .value{font-size:22px}}@media(max-width:450px){.branches{grid-template-columns:repeat(3,minmax(0,1fr))}.modelgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.kpi .value{font-size:20px}h1{font-size:23px}.card{border-radius:16px}}
@@ -23,10 +23,23 @@
 .growthRow .value strong{font-size:15px}
 .growthSkip{text-align:center;color:var(--sub);font-size:12px;padding:3px}
 @media(max-width:450px){.bonusQuick{grid-template-columns:1fr}.growthRow{grid-template-columns:65px minmax(75px,1fr) minmax(82px,1fr);gap:5px;padding:9px 7px}.growthRow .value strong{font-size:13px}}
+
+.pinPreview{display:flex;justify-content:space-between;align-items:center;gap:12px;background:#f5f9ff;border:1px solid #dce8f8;border-radius:11px;padding:11px 12px;margin:0 0 12px}
+.pinLabel{font-size:11px;color:var(--sub)}
+.pinName{font-weight:800;font-size:16px}
+.pinHelp{font-size:11px;color:var(--sub);max-width:55%;text-align:right}
+.growthTable{margin:11px 0 12px;width:100%;border-collapse:collapse;font-size:12px}
+.growthTable th{font-size:11px;background:#eef3fb;color:var(--sub);font-weight:700;padding:5px 8px}
+.growthTable td{padding:6px 8px}
+.growthTable tbody tr{cursor:default}
+.growthTable tbody tr.current{background:#eaf3ff;font-weight:800}
+.growthTable tbody tr.growthGap td{text-align:center;color:var(--sub);padding:3px;font-size:11px}
+.b9Reason{background:#f5f8fc;border-radius:8px;padding:8px 10px;margin:6px 0 12px;font-size:12px;color:#465973}
+@media(max-width:450px){.pinPreview{align-items:flex-start;flex-direction:column;gap:3px}.pinHelp{text-align:left;max-width:none}.growthTable th,.growthTable td{padding:6px 6px}}
 </style>
 </head>
 <body>
-<header><div class="wrap"><div class="eyebrow">Growth &amp; Bonus Calculator · Ver 1.2 · 非公式</div><h1>ABO グループ成長シミュレーター</h1><p>平均PVとフロント人数を入れるだけ。グループが何か月後に何人になるか、成績別ボーナスと追加ボーナスの違いを見てみよう。</p></div></header>
+<header><div class="wrap"><div class="eyebrow">Growth &amp; Bonus Calculator · Ver 1.3 · 非公式</div><h1>ABO グループ成長シミュレーター</h1><p>平均PVとフロント人数を入れるだけ。グループが何か月後に何人になるか、成績別ボーナスと追加ボーナスの違いを見てみよう。</p></div></header>
 <main><div class="layout"><section class="card sticky" aria-label="入力設定">
 <div class="steps"><h2>かんたん設定</h2><span class="step"><b>3項目</b> からスタート</span></div>
 <div class="field"><label for="pv">① 1人あたりの平均購入PV（毎月）</label><div class="control"><input id="pv" type="number" min="0" max="100" step="0.1" value="1"><span class="unit">万PV / 人</span></div><div class="hint">本人・各ABOが毎月同じPVを維持すると仮定</div></div>
@@ -45,14 +58,14 @@
 <div class="gridright"><section class="card" aria-label="結果の概要"><div class="headrow"><div><h2>将来のグループとボーナス</h2><div class="small">見たい月を動かすと、その月の結果に切り替わります。</div></div><span class="pill" id="ratePill">0%</span></div>
 <div class="rangebar"><label for="month"><span>予測する月</span><span id="monthLabel">12か月後</span></label><input id="month" type="range" min="0" max="24" step="1" value="12"></div>
 <div class="kpis"><div class="kpi"><div class="label">本人を含むグループ総人数</div><div class="value" id="count">—</div><div class="sub" id="depth">—</div></div><div class="kpi"><div class="label">グループ全体の月間PV</div><div class="value" id="groupPv">—</div><div class="sub">全員が同じPVで購入した場合</div></div><div class="kpi main"><div class="label">本人の成績別ボーナス概算</div><div class="value" id="baseBonus">—</div><div class="sub">直下系列分を控除・税込参考</div></div><div class="kpi main"><div class="label">選択した追加ボーナス込み</div><div class="value" id="totalBonus">—</div><div class="sub">資格条件付きの参考額</div></div></div>
-<div class="bonusQuick" id="bonusQuick" aria-label="各ボーナスの試算額"></div><div id="milestone" class="notice info"></div><div id="excess" class="noData" style="display:none"></div>
+<div class="bonusQuick" id="bonusQuick" aria-label="各ボーナスの試算額"></div><div class="pinPreview"><div><div class="pinLabel">ピンレベル（実績からの目安）</div><div class="pinName" id="pinLevel">—</div></div><div class="pinHelp" id="pinHelp">正式な認定・審査とは異なります</div></div><div id="milestone" class="notice info"></div><div id="excess" class="noData" style="display:none"></div>
 </section>
-<section class="card" aria-label="成長の様子"><div class="headrow"><div><h2>グループが増えるイメージ</h2><div class="small">最初の4か月と、選択した月までの直近2か月を表示</div></div><span class="pill success" id="growthPill">3か月ごと</span></div><div class="growthRows" id="depthTiles"></div><div class="chartbox"><div class="legend"><span class="dot"></span>累計人数（対数表示ではなく実数）</div><div class="chart" id="growthChart"></div></div></section>
-<section class="card" aria-label="ボーナスの内訳"><h2>その月のボーナス内訳</h2><div class="small">成績別ボーナスは全体の額から、直下フロントの成績別ボーナス相当額を差し引きます。</div><div id="breakdown" style="margin-top:12px"></div><div id="warnings" style="margin-top:12px"></div></section>
+<section class="card" aria-label="成長の様子"><div class="headrow"><div><h2>グループが増えるイメージ</h2><div class="small">最初の4か月＋選択月の直近2か月をコンパクトに表示</div></div><span class="pill success" id="growthPill">3か月ごと</span></div><div class="growthRows" id="depthTiles"></div><div class="chartbox"><div class="legend"><span class="dot"></span>累計人数（対数表示ではなく実数）</div><div class="chart" id="growthChart"></div></div></section>
+<section class="card" aria-label="月次ボーナス"><h2>月次ボーナス</h2><div class="small">成績別ボーナスは全体の額から、直下フロントの成績別ボーナス相当額を差し引きます。</div><div id="breakdown" style="margin-top:12px"></div><div id="warnings" style="margin-top:12px"></div></section>
 <section class="card" aria-label="フロントとセカンドの達成率"><h2>フロント別の達成率</h2><div class="small">フロントと、その先のセカンド・サードそれぞれの「系列全体PV」に対する成績別ボーナス率です。各人の実際の受取額ではありません。</div><div id="frontStats" style="margin-top:12px"></div></section>
 <section class="card" aria-label="月ごとの推移"><div class="headrow"><div><h2>月ごとの推移</h2><div class="small">行を押すとその月の内訳が表示されます。</div></div><button class="action" id="csv" type="button">CSV保存</button></div><div class="scroll" style="margin-top:12px"><table><thead><tr><th>経過月</th><th>人数</th><th>全体PV</th><th>率</th><th>本人の概算合計</th></tr></thead><tbody id="timelineBody"></tbody></table></div></section>
-<section class="card"><h2>この計算で想定していること</h2><p class="small" style="margin-bottom:7px">新しい段は設定した間隔ごとに一斉に増えます。全員が同じ平均PVを毎月継続し、購入停止・返品・継続率低下・新規登録月のずれは考慮しません。</p><p class="small" style="margin:0 0 7px">追加ボーナスは、PV・直下系列の条件を試験的に判定しますが、過去の実績・正式認定・受給可能期間・個別の登録履歴は検証できません。チェック時の金額は<strong>条件を満たすと仮定した場合</strong>のみの参考値です。</p><p class="small" style="margin:0">リーダーシップ・ボーナスはチェック時のみ、月間PVと系列数から有資格SPを仮定して6％と最低保証調整を概算します（正式資格・会社審査や上位系列への特殊なパスアップなどは未確認）。その他の追加報酬、小売利益、経費、税金は含みません。本人購入分への8%消費税適用などは省略し、説明用の1:1.59比率を税込参考換算として使用しています。日本アムウェイの公式ツールではありません。</p></section>
-</div></div></main><footer>Ver 1.2 ｜ 根拠：日本アムウェイ「概要書面 2026年9月版」冊子14〜17・43〜47ページ。2026年11月時点の資料に基づく非公式の教育用試算です。一般公開・勧誘用途では会社の販売促進物等の規定、収入表示ルールを事前にご確認ください。</footer>
+<section class="card"><h2>この計算で想定していること</h2><p class="small" style="margin-bottom:7px">新しい段は設定した間隔ごとに一斉に増えます。全員が同じ平均PVを毎月継続し、購入停止・返品・継続率低下・新規登録月のずれは考慮しません。</p><p class="small" style="margin:0 0 7px">追加ボーナスは、PV・直下系列の条件を試験的に判定しますが、過去の実績・正式認定・受給可能期間・個別の登録履歴は検証できません。チェック時の金額は<strong>条件を満たすと仮定した場合</strong>のみの参考値です。ピンレベル表示も実績条件の目安であり、正式認定や過去の認定・会計年度実績は判定していません。</p><p class="small" style="margin:0">リーダーシップ・ボーナスはチェック時のみ、月間PVと系列数から有資格SPを仮定して6％と最低保証調整を概算します（正式資格・会社審査や上位系列への特殊なパスアップなどは未確認）。その他の追加報酬、小売利益、経費、税金は含みません。本人購入分への8%消費税適用などは省略し、説明用の1:1.59比率を税込参考換算として使用しています。日本アムウェイの公式ツールではありません。</p></section>
+</div></div></main><footer>Ver 1.3 ｜ 根拠：日本アムウェイ「概要書面 2026年9月版」冊子14〜17・43〜47ページ。2026年11月時点の資料に基づく非公式の教育用試算です。一般公開・勧誘用途では会社の販売促進物等の規定、収入表示ルールを事前にご確認ください。</footer>
 <script>
 (()=>{'use strict';
 const tiers=[[1500000,.21],[1000000,.18],[600000,.15],[360000,.12],[180000,.09],[90000,.06],[30000,.03],[0,0]];
@@ -64,7 +77,7 @@ const bonusRate=pv=>tiers.find(([min])=>pv>=min)[1];
 const bonusB9=n=>n<1||n>12?0:[5000,10000,15000,20000][Math.min(3,Math.floor((n-1)/3))];
 const bonusB15=n=>n<1||n>12?0:[30000,35000,40000,45000][Math.min(3,Math.floor((n-1)/3))];
 const bsiAmount=n=>n<=0?0:n===1?2000:n===2?4000:n===3?9000:n===4?12000:n===5?15000:18000;
-const storageKey='abo-sim-v5';
+const storageKey='abo-sim-v6';
 let rows=[], selectedMonth=12;
 function branchSize(k,depth){let sum=0,gen=1;for(let i=0;i<depth;i++){sum+=gen;if(sum>MAX_PEOPLE)return Infinity;gen*=k;}return sum;}
 function calculate(t,s){const depth=Math.floor(t/s.interval), sizes=s.fronts.map(k=>branchSize(k,depth)),total=1+sizes.reduce((a,b)=>a+b,0);if(!Number.isFinite(total)||total>MAX_PEOPLE)return{month:t,depth,invalid:true};const groupPv=total*s.pv, groupBv=groupPv*1.446, taxRatio=s.ratio, rate=bonusRate(groupPv), frontPv=sizes.map(size=>size*s.pv), frontRates=frontPv.map(bonusRate), allEquivalent=groupPv*taxRatio*rate, directEquivalent=frontPv.reduce((sum,pv,i)=>sum+pv*taxRatio*frontRates[i],0), base=Math.max(0,Math.round(allEquivalent-directEquivalent));const qualifyingFronts=frontRates.reduce((a,x)=>a+(x===.21?1:0),0),awardPv=s.pv+frontPv.reduce((a,x,i)=>a+(frontRates[i]<.21?x:0),0), spType=awardPv>=1500000?'I':qualifyingFronts>=1&&awardPv>=600000?'II':qualifyingFronts>=2?'III':null;
@@ -80,49 +93,78 @@ function configureMonth(){const max=int('duration',24,12,36);$('month').max=max;
 function svgLine(values,color,unit=''){const finite=values.filter(Number.isFinite);if(!finite.length)return'<div class="small" style="padding:20px">表示できるデータがありません</div>';const W=640,H=192,L=45,R=13,T=17,B=32,max=Math.max(1,...finite),n=values.length-1,plotW=W-L-R,plotH=H-T-B;const pos=(i,v)=>[L+(i/n)*plotW,T+plotH-(v/max)*plotH];const pts=values.map((v,i)=>Number.isFinite(v)?pos(i,v):null).filter(Boolean);const path=pts.map((p,i)=>(i?'L':'M')+p.map(q=>q.toFixed(1)).join(',')).join(' ');const curIdx=Math.min(selectedMonth,n),cur=Number.isFinite(values[curIdx])?pos(curIdx,values[curIdx]):null;let marks='';for(let i=0;i<=3;i++){const y=T+plotH*i/3;marks+=`<line x1="${L}" y1="${y}" x2="${W-R}" y2="${y}" stroke="#e7edf5"/><text x="${L-6}" y="${y+4}" font-size="10" text-anchor="end" fill="#738198">${fmt(max*(3-i)/3)}</text>`;}for(const i of [...new Set([0,Math.round(n/2),n])])marks+=`<text x="${L+i/n*plotW}" y="${H-9}" font-size="10" text-anchor="middle" fill="#738198">${i}か月</text>`;return`<svg role="img" aria-label="月ごとの${unit}推移" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">${marks}<path d="${path}" fill="none" stroke="${color}" stroke-width="3.3" stroke-linecap="round" stroke-linejoin="round"/>${cur?`<line x1="${cur[0]}" x2="${cur[0]}" y1="${T}" y2="${T+plotH}" stroke="#9ec2ee" stroke-dasharray="4 4"/><circle cx="${cur[0]}" cy="${cur[1]}" r="5.5" fill="${color}" stroke="white" stroke-width="2"/>`:''}</svg>`;}
 function renderTiles(s,r){
   const last=r.month;
-  const show=new Set([0,...Array.from({length:Math.min(4,last)},(_,i)=>i+1),Math.max(0,last-1),last]);
-  const months=[...show].filter(m=>m<=last).sort((a,b)=>a-b);
-  const host=$('depthTiles');
-  let html='',previous=null;
+  const show = last===0 ? [0] : [
+    ...Array.from({length:Math.min(4,last)},(_,i)=>i+1),
+    Math.max(1,last-1),last
+  ];
+  const months=[...new Set(show)].filter(m=>m<=last).sort((a,b)=>a-b);
+  let html='<table class="growthTable"><thead><tr><th>経過月</th><th>増加人数</th><th>累計人数</th></tr></thead><tbody>';
+  let previous=null;
   for(const m of months){
-    if(previous!==null&&m-previous>1)html+='<div class="growthSkip">中間の '+(m-previous-1)+'か月分は省略</div>';
-    const item=rows[m],prior=m>0?rows[m-1]:null;
-    const delta=item.invalid?'—':m===0?1:prior.invalid?'—':item.total-prior.total;
-    const stage=Math.floor(m/s.interval);
-    const name=m===0?'現在':m+'か月後';
-    html+='<div class="growthRow '+(m===last?'current':'')+'"><div class="when"><strong>'+name+'</strong><small>'+(m===0?'本人':stage+'段目まで')+'</small></div><div class="value"><small>新しく増えた人数</small><strong>'+(item.invalid?'上限超過':delta===0?'0人':'+'+fmt(delta)+'人')+'</strong></div><div class="value"><small>累計人数</small><strong>'+(item.invalid?'—':fmt(item.total)+'人')+'</strong></div></div>';
+    if(previous!==null&&m-previous>1)html+='<tr class="growthGap"><td colspan="3">… 中間 '+(m-previous-1)+'か月を省略 …</td></tr>';
+    const item=rows[m], prior=m>0?rows[m-1]:null;
+    const delta=item.invalid?null:m===0?1:prior.invalid?null:item.total-prior.total;
+    html+='<tr class="'+(m===last?'current':'')+'"><td>'+(m===0?'現在':m+'か月後')+'</td><td>'+(delta===null?'—':('+'+fmt(delta)+'人'))+'</td><td>'+(item.invalid?'上限超過':fmt(item.total)+'人')+'</td></tr>';
     previous=m;
   }
-  host.innerHTML=html;
+  $('depthTiles').innerHTML=html+'</tbody></table>';
 }
 function renderBonusQuick(s,r){
   const labels=[['成績別','base',true],['BSI','bsi',s.bsi],['ブロンズ9','b9',s.b9],['ブロンズ15','b15',s.b15],['6％リーダーシップ','leadership',s.lb]];
   $('bonusQuick').innerHTML=labels.map(([name,key,on])=>'<div class="bonusCell '+(on?'':'off')+'"><span>'+name+'</span><strong>'+(r.invalid?'—':on?yen(r[key]):'OFF')+'</strong></div>').join('');
 }
-function renderBreakdown(s,r){if(r.invalid){$('breakdown').innerHTML='<div class="noData">人数が計算上限を超えました。フロント人数や期間を小さくしてください。</div>';$('warnings').innerHTML='';return;}const row=(label,num,sub='',strong=false)=>`<div class="detailrow ${strong?'total':''}"><div class="left">${label}${sub?`<small>${sub}</small>`:''}</div><strong>${yen(num)}</strong></div>`;let html=row(`グループ全体の${Math.round(r.rate*100)}％相当額`,Math.round(r.allEquivalent),'このまま全額が本人に支払われるわけではありません')+row('直下フロントの相当額を控除',-Math.round(r.directEquivalent),'本人の成績別ボーナスから差し引く額')+row('成績別ボーナス・本人分',r.base,'税込の簡易換算による参考額',true);if(s.bsi)html+=row('BSI',r.bsi,`条件に該当する直接スポンサー：${r.bsiCount}組（13か月の仮定）`);if(s.b9)html+=row('ブロンズ9',r.b9,r.b9?`試算上の第${r.b9Count}回・過去実績等は未確認`:`必要：本人1万PV、本人9%以上、直下3%以上が3系列`);if(s.b15)html+=row('ブロンズ15',r.b15,r.b15?`試算上の第${r.b15Count}回・過去実績等は未確認`:`必要：本人1万PV、本人15%以上、直下6%以上が3系列`);if(s.lb)html+=row('6％リーダーシップ（条件付き概算）',r.leadership,r.qualifyingFronts?`${r.qualifyingFronts}系列が21％・SP想定：${r.spType||'SPS/対象外'}・最低保証調整概算 ${yen(r.passUpShortfall)}`:'直下に21％系列がないため対象外');html+=row('選択したボーナス込みの参考合計',r.totalBonus,'各追加ボーナスの正式な資格は未確認',true);$('breakdown').innerHTML=html;const warn=[];if(r.depth>=2)warn.push('セカンド以降のPVはすでに直下フロント系列のPVに含まれています。セカンドの成績別ボーナスを上乗せすると二重計上になるため、本人の合計には別加算していません。');if(r.twentyOneFront&&!s.lb)warn.push('直下に21％系列があります。6％リーダーシップの参考額はチェックで表示できます。');if(s.lb)warn.push('6％リーダーシップは21％の直下系列と有資格SPを前提とし、最低保証調整を簡易計算しています。正式資格や会社審査、系列上位との特殊条件は反映しません。個人PVと継続年数などの確認が必要です。');if(s.b9&&r.b9)warn.push('ブロンズ9は昨会計年度の最高達成率、初回受給、受給期間などの条件を未確認です。');if(s.b15&&r.b15)warn.push('ブロンズ15は過去のGP以上認定歴、初回受給、受給期間などを未確認です。');if(s.bsi&&r.bsi)warn.push('BSIは直接スポンサーした新規ABO全員が、同一月に登録し、当月1万PV以上を購入したと仮定しています。');if(r.rate<.21)warn.push('この月はまだ21％ではありません。実際のグループPVに対応する成績別ボーナス率で概算しています。');$('warnings').innerHTML=warn.map(t=>`<div class="notice">${t}</div>`).join('');}
+function renderBreakdown(s,r){if(r.invalid){$('breakdown').innerHTML='<div class="noData">人数が計算上限を超えました。フロント人数や期間を小さくしてください。</div>';$('warnings').innerHTML='';return;}const row=(label,num,sub='',strong=false)=>`<div class="detailrow ${strong?'total':''}"><div class="left">${label}${sub?`<small>${sub}</small>`:''}</div><strong>${yen(num)}</strong></div>`;let html=row(`グループ全体の${Math.round(r.rate*100)}％相当額`,Math.round(r.allEquivalent),'このまま全額が本人に支払われるわけではありません')+row('直下フロントの相当額を控除',-Math.round(r.directEquivalent),'本人の成績別ボーナスから差し引く額')+row('成績別ボーナス・本人分',r.base,'税込の簡易換算による参考額',true);if(s.bsi)html+=row('BSI',r.bsi,`条件に該当する直接スポンサー：${r.bsiCount}組（13か月の仮定）`);if(s.b9){
+  html+=row('ブロンズ9',r.b9,r.b9?'試算上の第'+r.b9Count+'回・昨会計年度の実績等は未確認':'月間条件：本人9%以上・パーソナル1万PV以上・直下3%以上が3系列');
+  let reason='';
+  if(r.rate<.09)reason='本人グループの率が'+Math.round(r.rate*100)+'%（9%以上が必要）';
+  else if(s.pv<10000)reason='本人のパーソナル・ボリュームが'+fmt(s.pv)+'PV（1万PV以上が必要）';
+  else if(r.front3<3)reason='3%以上の直下系列が'+r.front3+'系列（3系列以上が必要）';
+  else if(!r.b9)reason=r.b9Count>=12?'モデル上、受給上限12回に到達':'モデル上、初回受給から翌々会計年度末の期間外';
+  else reason='月間条件を満たす想定（第'+r.b9Count+'回）。前年度最高率・過去の受給歴は未確認';
+  html+='<div class="b9Reason"><strong>ブロンズ9の判定：</strong>'+reason+'</div>';
+}if(s.b15)html+=row('ブロンズ15',r.b15,r.b15?`試算上の第${r.b15Count}回・過去実績等は未確認`:`必要：本人1万PV、本人15%以上、直下6%以上が3系列`);if(s.lb)html+=row('6％リーダーシップ（条件付き概算）',r.leadership,r.qualifyingFronts?`${r.qualifyingFronts}系列が21％・SP想定：${r.spType||'SPS/対象外'}・最低保証調整概算 ${yen(r.passUpShortfall)}`:'直下に21％系列がないため対象外');html+=row('選択したボーナス込みの参考合計',r.totalBonus,'各追加ボーナスの正式な資格は未確認',true);$('breakdown').innerHTML=html;const warn=[];if(r.depth>=2)warn.push('セカンド以降のPVはすでに直下フロント系列のPVに含まれています。セカンドの成績別ボーナスを上乗せすると二重計上になるため、本人の合計には別加算していません。');if(r.twentyOneFront&&!s.lb)warn.push('直下に21％系列があります。6％リーダーシップの参考額はチェックで表示できます。');if(s.lb)warn.push('6％リーダーシップは21％の直下系列と有資格SPを前提とし、最低保証調整を簡易計算しています。正式資格や会社審査、系列上位との特殊条件は反映しません。個人PVと継続年数などの確認が必要です。');if(s.b9&&r.b9)warn.push('ブロンズ9は昨会計年度の最高達成率、初回受給、受給期間などの条件を未確認です。');if(s.b15&&r.b15)warn.push('ブロンズ15は過去のGP以上認定歴、初回受給、受給期間などを未確認です。');if(s.bsi&&r.bsi)warn.push('BSIは直接スポンサーした新規ABO全員が、同一月に登録し、当月1万PV以上を購入したと仮定しています。');if(r.rate<.21)warn.push('この月はまだ21％ではありません。実際のグループPVに対応する成績別ボーナス率で概算しています。');$('warnings').innerHTML=warn.map(t=>`<div class="notice">${t}</div>`).join('');}
 function renderFrontStats(s,r){const host=$('frontStats');if(r.invalid){host.innerHTML='<div class="small">計算上限のため表示できません。</div>';return;}if(!s.fronts.length){host.innerHTML='<div class="small">フロントを設定すると、系列別の達成率を表示します。</div>';return;}host.innerHTML=s.fronts.map((k,i)=>{const pv=r.frontPv[i],rate=r.frontRates[i];const steps=[];for(let d=2;d<=r.depth&&d<=8;d++){const descendantPv=branchSize(k,r.depth-d+1)*s.pv;steps.push('<div class="detailrow"><div class="left">'+d+'段目（'+(d===2?'セカンド':d===3?'サード':'系列下位')+'）の1人あたり系列PV</div><strong>'+fmt(descendantPv)+' PV / '+Math.round(bonusRate(descendantPv)*100)+'%</strong></div>');}
 return '<details class="pale" style="margin-bottom:8px;padding:12px;border-radius:10px"><summary style="cursor:pointer;font-weight:700">フロント'+(i+1)+'：'+fmt(pv)+' PV / '+Math.round(rate*100)+'%</summary><div class="small" style="padding-top:5px">フロント'+(i+1)+'の系列全体（本人＋セカンド以降）。この系列の相当額は本人の成績別計算ですでに控除しています。</div>'+steps.join('')+'</details>';}).join('');}
 function renderTable(){const tb=$('timelineBody');tb.innerHTML=rows.map(r=>`<tr data-month="${r.month}" class="${r.month===selectedMonth?'active':''}"><td>${r.month}か月後</td><td>${r.invalid?'上限超過':fmt(r.total)}</td><td>${r.invalid?'—':fmt(r.groupPv)}</td><td>${r.invalid?'—':Math.round(r.rate*100)+'%'}</td><td>${r.invalid?'—':yen(r.totalBonus)}</td></tr>`).join('');tb.querySelectorAll('tr').forEach(tr=>tr.addEventListener('click',()=>{selectedMonth=Number(tr.dataset.month);$('month').value=selectedMonth;renderResults()}));}
-function renderResults(){const s=settings(),r=rows[selectedMonth];$('monthLabel').textContent=`${selectedMonth}か月後`;$('ratePill').textContent=r.invalid?'計算上限':`成績別 ${Math.round(r.rate*100)}%`;$('ratePill').className=`pill ${!r.invalid&&r.rate===.21?'success':''}`;$('growthPill').textContent=`${s.interval}か月ごとに次の段`;const summary=(id,v)=>$(id).textContent=v;if(r.invalid){['count','groupPv','baseBonus','totalBonus'].forEach(id=>summary(id,'—'));summary('depth',`${r.depth}段目 / 計算上限`);$('excess').style.display='block';$('excess').textContent='理想化した累乗モデルの人数が100万人を超えたため、その月以降の金額を表示していません。';}else{summary('count',`${fmt(r.total)} 人`);summary('groupPv',`${fmt(r.groupPv)} PV`);summary('baseBonus',yen(r.base));summary('totalBonus',yen(r.totalBonus));summary('depth',`${r.depth}段目まで形成`);$('excess').style.display='none';}const reached=rows.find(x=>!x.invalid&&x.rate>=.21);$('milestone').textContent=reached?`この入力条件では、グループ全体が21%（150万PV以上）になるのは ${reached.month}か月後です。※率の到達であり、資格認定・受給の保証ではありません。`:'この予測期間内は21%（150万PV以上）に到達していません。';$('growthChart').innerHTML=svgLine(rows.map(x=>x.invalid?NaN:x.total),'#1774dd','人数');renderTiles(s,r);renderBreakdown(s,r);renderBonusQuick(s,r);renderFrontStats(s,r);document.querySelectorAll('#timelineBody tr').forEach(tr=>tr.classList.toggle('active',Number(tr.dataset.month)===selectedMonth));}
-function save(){try{localStorage.setItem(storageKey,JSON.stringify({pv:$('pv').value,front:$('front').value,interval:$('interval').value,duration:$('duration').value,ratio:$('ratio').value,bsi:$('bsi').checked,b9:$('b9').checked,b15:$('b15').checked,lb:$('lb').checked,selectedMonth}));}catch(e){}}
+function renderPinLevel(s,r){
+  let label='判定なし',note='正式なピン認定には実績履歴・審査などが必要';
+  if(r.invalid){
+    label='計算上限を超過';note='この月の資格目安は算出できません';
+  }else if(r.spType){
+    label='SP '+r.spType+'（実績相当）';
+    note='GP・PT以上は達成月数と審査が必要なため未判定';
+  }else if(r.qualifyingFronts===1&&r.awardPv<600000){
+    label='SPS相当（ピンではありません）';note='21%系列1つ・アワード60万PV未満の想定';
+  }else if(r.b15Eligibility){
+    label='ブロンズ・ピン候補';note='初回で過去にSP認定なし等の条件が必要';
+  }else{
+    label='未該当／未判定';note='成績別ボーナス率とピンレベルは別のものです';
+  }
+  $('pinLevel').textContent=label;
+  $('pinHelp').textContent=note;
+}
+function renderResults(){const s=settings(),r=rows[selectedMonth];$('monthLabel').textContent=`${selectedMonth}か月後`;$('ratePill').textContent=r.invalid?'計算上限':`成績別 ${Math.round(r.rate*100)}%`;$('ratePill').className=`pill ${!r.invalid&&r.rate===.21?'success':''}`;$('growthPill').textContent=`${s.interval}か月ごとに次の段`;const summary=(id,v)=>$(id).textContent=v;if(r.invalid){['count','groupPv','baseBonus','totalBonus'].forEach(id=>summary(id,'—'));summary('depth',`${r.depth}段目 / 計算上限`);$('excess').style.display='block';$('excess').textContent='理想化した累乗モデルの人数が100万人を超えたため、その月以降の金額を表示していません。';}else{summary('count',`${fmt(r.total)} 人`);summary('groupPv',`${fmt(r.groupPv)} PV`);summary('baseBonus',yen(r.base));summary('totalBonus',yen(r.totalBonus));summary('depth',`${r.depth}段目まで形成`);$('excess').style.display='none';}const reached=rows.find(x=>!x.invalid&&x.rate>=.21);$('milestone').textContent=reached?`この入力条件では、グループ全体が21%（150万PV以上）になるのは ${reached.month}か月後です。※率の到達であり、資格認定・受給の保証ではありません。`:'この予測期間内は21%（150万PV以上）に到達していません。';$('growthChart').innerHTML=svgLine(rows.map(x=>x.invalid?NaN:x.total),'#1774dd','人数');renderTiles(s,r);renderBreakdown(s,r);renderBonusQuick(s,r);renderPinLevel(s,r);renderFrontStats(s,r);document.querySelectorAll('#timelineBody tr').forEach(tr=>tr.classList.toggle('active',Number(tr.dataset.month)===selectedMonth));}
+function save(){try{localStorage.setItem(storageKey,JSON.stringify({pv:$('pv').value,front:$('front').value,interval:$('interval').value,duration:$('duration').value,ratio:$('ratio').value,selectedMonth}));}catch(e){}}
 function refresh(){configureMonth();rows=calcAll(settings());renderResults();renderTable();save()}
 function csv(){const h=['経過月','段数','人数','月間PV','グループ率','成績別ボーナス概算','BSI仮加算','ブロンズ9仮加算','ブロンズ15仮加算','6%リーダーシップ仮加算','選択ボーナス込み参考合計'];const s=settings();const rs=rows.filter(r=>!r.invalid).map(r=>[r.month,r.depth,r.total,r.groupPv,Math.round(r.rate*100),r.base,s.bsi?r.bsi:0,s.b9?r.b9:0,s.b15?r.b15:0,s.lb?r.leadership:0,r.totalBonus]);const data='\ufeff'+[h,...rs].map(x=>x.join(',')).join('\r\n');const blob=new Blob([data],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='abo_growth_simulation.csv';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);}
 function load(){try{
   const saved=localStorage.getItem(storageKey);
+  const priorV5=localStorage.getItem('abo-sim-v5');
   const priorV4=localStorage.getItem('abo-sim-v4');
   const priorV3=localStorage.getItem('abo-sim-v3');
   const old=localStorage.getItem('abo-sim-v2');
-  const d=JSON.parse(saved||priorV4||priorV3||old||'null');
+  const d=JSON.parse(saved||priorV5||priorV4||priorV3||old||'null');
   if(!d)return;
   ['pv','front','duration','ratio'].forEach(id=>{if(d[id]!==undefined)$(id).value=d[id]});
   if(saved&&d.interval!==undefined)$('interval').value=d.interval;
   if(!saved)$('interval').value='1';
-  if(!saved&&!priorV4&&!priorV3&&d.ratio!==undefined){
+  if(!saved&&!priorV5&&!priorV4&&!priorV3&&d.ratio!==undefined){
     const previous=Number(d.ratio);
     d.ratio=Number.isFinite(previous)?Math.round(previous*1.1*100)/100:1.59;
     $('ratio').value=d.ratio;
   }
-  ['bsi','b9','b15','lb'].forEach(id=>{if(typeof d[id]==='boolean')$(id).checked=d[id]});
+  // チェックボックスは保存値を引き継がず、毎回OFFで開始
+  ['bsi','b9','b15','lb'].forEach(id=>$(id).checked=false);
   if(Number.isInteger(d.selectedMonth))selectedMonth=d.selectedMonth;
 }catch(e){}}
 load();['pv','front','interval','duration','ratio','bsi','b9','b15','lb'].forEach(id=>$(id).addEventListener('input',refresh));$('month').addEventListener('input',e=>{selectedMonth=Number(e.target.value);renderResults();save()});$('reset').addEventListener('click',()=>{try{localStorage.removeItem(storageKey)}catch(e){}$('pv').value=1;$('front').value=3;$('interval').value=1;$('duration').value=24;$('ratio').value=1.59;selectedMonth=12;['bsi','b9','b15','lb'].forEach(id=>$(id).checked=false);refresh()});$('csv').addEventListener('click',csv);refresh();
